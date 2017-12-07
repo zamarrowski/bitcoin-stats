@@ -3,8 +3,20 @@ import styled from 'styled-components'
 import colors from './../styles/colors'
 
 export const ExchangeRateContainer = styled.div`
-  width: 32%;
+  width: 100%;
   margin-bottom: 20px;
+
+  @media (min-width: 900px) {
+    width: 48%;
+  }
+
+  @media (min-width: 1024px) {
+    width: 32%;
+  }
+
+  @media (min-width: 1200px) {
+    width: 24%;
+  }
 `
 export const MoneyTitle = styled.h3`
   text-align: center;

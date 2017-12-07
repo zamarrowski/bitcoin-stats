@@ -20,9 +20,9 @@ class ExchangeRatesContainer extends Component {
 
   componentDidMount() {
     this._getExchanges()
-    //setInterval(() => {
-    //  this._getExchanges()
-    //}, 5000)
+    setInterval(() => {
+      this._getExchanges()
+    }, 5000)
 
   }
 
