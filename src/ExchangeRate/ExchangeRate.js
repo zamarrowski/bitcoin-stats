@@ -7,9 +7,9 @@ import { ExchangeRateContainer, MoneyTitle, Label, Value } from './styles'
 export default props =>
   <ExchangeRateContainer>
     <Paper style={{padding: '10px'}} zDepth={1}>
-      <MoneyTitle>{props.info.symbol} - {props.name}</MoneyTitle>
+      <MoneyTitle>{props.newInfo.symbol} - {props.name}</MoneyTitle>
       <div>
-        <Label>Value: </Label> <Value>{props.info['last']}{props.info.symbol}</Value>
+        <Label>Value: </Label> <Value>{props.newInfo['last']}{props.newInfo.symbol}</Value>
       </div>
       <div>
         <p>Convert {props.name} to Bitcoin:</p>

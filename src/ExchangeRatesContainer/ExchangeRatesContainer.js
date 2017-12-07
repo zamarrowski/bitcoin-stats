@@ -12,13 +12,18 @@ class ExchangeRatesContainer extends Component {
   constructor() {
     super()
     this.state = {
-      exchangeRates: {},
+      oldExchangeRates: null,
+      newExchangeRates: null,
       toBTC: {}
     }
   }
 
   componentDidMount() {
-    exchangeRatesServices.getExchangeRates().then(exchangeRates => this.setState({ exchangeRates }))
+    this._getExchanges()
+    //setInterval(() => {
+    //  this._getExchanges()
+    //}, 5000)
+
   }
 
   render() {
@@ -33,9 +38,10 @@ class ExchangeRatesContainer extends Component {
         Exchange rates
       </TitleSection>
       <Container>
-        {Object.keys(this.state.exchangeRates).map((key, index) => (
+        {Object.keys(this.state.newExchangeRates || {}).map((key, index) => (
           <ExchangeRate name={key}
-            info={this.state.exchangeRates[key]}
+            newInfo={this.state.newExchangeRates[key] || {}}
+            oldInfo={this.state.oldExchangeRates[key] || {}}
             key={index}
             toBTC={this.state.toBTC[key]}
             onTypeQuantity={this._getExchange.bind(this)}
@@ -56,6 +62,22 @@ class ExchangeRatesContainer extends Component {
       })
     }
   }
+
+  _getExchanges() {
+    exchangeRatesServices.getExchangeRates().then(exchangeRates => {
+      if (!this.state.newExchangeRates) {
+        this.setState({ newExchangeRates: exchangeRates, oldExchangeRates: exchangeRates })
+      } else {
+        this.setState((state) => {
+          return {
+            newExchangeRates: exchangeRates,
+            oldExchangeRates: state.newExchangeRates
+          }
+        })
+      }
+    })
+  }
+
 }
 
 export default ExchangeRatesContainer
