@@ -1,18 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Paper from 'material-ui/Paper'
+import TextField from 'material-ui/TextField'
 
-import { ExchangeRateContainer } from './styles'
+import { ExchangeRateContainer, MoneyTitle, Label, Value } from './styles'
 
-class ExchangeRate extends Component {
-  render() {
-    return(
-      <ExchangeRateContainer>
-        <Paper zDepth={1}>
-          <h1>Cambio</h1>
-        </Paper>
-      </ExchangeRateContainer>
-    )
-  }
-}
-
-export default ExchangeRate
+export default props =>
+  <ExchangeRateContainer>
+    <Paper style={{padding: '10px'}} zDepth={1}>
+      <MoneyTitle>{props.info.symbol} - {props.name}</MoneyTitle>
+      <div>
+        <Label>Value: </Label> <Value>{props.info['last']}{props.info.symbol}</Value>
+      </div>
+      <div>
+        <p>Convert {props.name} to Bitcoin:</p>
+        <TextField
+           hintText="Quantity"
+           fullWidth={true}
+           onChange={(e, value) => props.onTypeQuantity(value, props.name)}
+         /><br />
+         In BTC {props.toBTC}
+      </div>
+    </Paper>
+  </ExchangeRateContainer>

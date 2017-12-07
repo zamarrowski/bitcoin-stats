@@ -12,7 +12,8 @@ class ExchangeRatesContainer extends Component {
   constructor() {
     super()
     this.state = {
-      exchangeRates: {}
+      exchangeRates: {},
+      toBTC: {}
     }
   }
 
@@ -33,11 +34,27 @@ class ExchangeRatesContainer extends Component {
       </TitleSection>
       <Container>
         {Object.keys(this.state.exchangeRates).map((key, index) => (
-          <ExchangeRate name={key} info={this.state.exchangeRates[key]} key={index}/>
+          <ExchangeRate name={key}
+            info={this.state.exchangeRates[key]}
+            key={index}
+            toBTC={this.state.toBTC[key]}
+            onTypeQuantity={this._getExchange.bind(this)}
+          />
         ))}
       </Container>
       </div>
     )
+  }
+
+  _getExchange(value, currency) {
+    value = Number(value)
+    if (value) {
+      exchangeRatesServices.convertToBTC(value, currency).then(response => {
+        let toBTC = Object.assign({}, this.state.toBTC)
+        toBTC[`${currency}`] = response
+        this.setState({ toBTC })
+      })
+    }
   }
 }
 
