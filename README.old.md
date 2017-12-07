@@ -1,2 +1,0 @@
-# bitcoin-stats
-Bitcoin stats
